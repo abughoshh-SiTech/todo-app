@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{%block title %} 2Do {%endblock%} 
+{% block content %}
+    <div>
+          <form class="form-inline my-2 my-lg-0 justify-content-between" method = "POST">
+         {%csrf_token%}
+          <input
+            class="form-control mr-sm-2 mt-1"
+            type="text"
+            placeholder="Add Task"
+            name = "title"
+            required
+          />
+          <input
+            class="form-control mr-sm-2 mt-1"
+            type="text-area"
+            placeholder="Add description"
+            name = "description"
+            required
+
+          />
+          <input
+            class="form-control mr-sm-2 mt-1"
+            type="text"
+            placeholder="Add Creator"
+            name = "creator"
+            required
+
+          />
+
+          <button class="btn btn-primary my-2 my-sm-0" type="Success">
+            Add
+          </button>
+        </form>
+    </div>
+
+    <div class = "text-info h6 mt-5">*Click on task title to edit</div>
+
+{%if messages%}
+{%for message in messages%}
+<div class = "alert alert-warning alert-dismissible mt-5 ease-in">
+<button class = "close" data-dismiss="alert">
+    <small><sup>x</sup></small>
+</button>
+{{message}}
+</div>
+{%endfor%}
+{%endif%}
+
+{%if Tasks%} 
+    {%for Task in Tasks%}
+      {%if Task.done%}
+        <div class = "row mt-5 bg-light rounded-sm">
+            <div class = "col-12 h6 text-secondary">Creator: {{Task.creator}}</div>
+            <div class = "col-8 text-striked h3" > <a class = "text-info" href = "{%url 'edit' Task.id%}">{{Task.title}}</a></div>
+            <div class = "col-2"><a class = "btn btn-dark btn-sm" href = "{%url 'uncomplete' Task.id%}">uncomplete</a></div>
+            <div class = "col-2"> <a class = "btn btn-danger btn-sm" href = "{%url 'delete' Task.id%}">delete</a></div>
+            <div class = "col-12 text-secondary">{{Task.description}}</div>
+        </div>
+        
+        {%else%}
+        <div class = "row mt-5 rounded-sm">
+            <div class = "col-12 h6 text-secondary">Creator: {{Task.creator}}</div>
+            <div class = "col-8 h3" > <a class = "text-info" href = "{%url 'edit' Task.id%}">{{Task.title}}</a></div>
+            <div class = "col-2"><a class = "btn btn-success btn-sm" href = "{%url 'complete' Task.id%}">complete</a></div>
+            <div class = "col-2"> <a class = "btn btn-danger btn-sm" href = "{%url 'delete' Task.id%}">delete</a></div>
+            <div class = "col-12 text-secondary">{{Task.description}}</div>
+        </div>
+
+      {%endif%}
+    {%endfor%} 
+{%endif%} 
+
+{% endblock %}

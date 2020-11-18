@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{%block title %} Edit Task {%endblock%} 
+{% block content %}
+
+
+
+    {%if task%}
+
+          <form class="form-inline my-2 my-lg-0" method = "POST">
+         {%csrf_token%}
+          
+          <input
+            class="form-control mr-sm-2 mt-1"
+            type="text"
+            placeholder="{{task.title}}"
+            value="{{task.title}}"
+            name = "title"
+            required
+          />
+          
+          <input
+            class="form-control mr-sm-2 mt-1"
+            type="text-area"
+            placeholder="{{task.description}}"
+            value="{{task.description}}"
+            name = "description"
+            required
+
+          />
+          
+          <input
+            class="form-control mr-sm-2 mt-1"
+            type="text"
+            placeholder="{{task.creator}}"
+            value="{{task.creator}}"
+            name = "creator"
+            required
+          />
+
+          <input type = "hidden" value = "{{task.done}}" name = "done"/>
+          <button class="btn btn-primary my-2 my-sm-0" type="Success">
+            Save
+          </button>
+        </form>
+
+    {%endif%}
+
+
+{%endblock%}
